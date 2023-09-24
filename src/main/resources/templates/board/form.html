@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <form method="post" action="/boards">
+        <input type="text" name="title" placeholder="제목을 입력하세요">
+        <br>
+        <textarea name="content" placeholder="내용을 입력하세요"></textarea>
+        <br>
+        <button type="submit">저장</button>
+        <button id="btnCancel" type="button">취소</button>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#btnCancel').on('click', function () {
+                history.back(-1);
+            });
+        });
+    </script>
+</body>
+</html>

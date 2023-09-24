@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<form>
+    <input type="hidden" id="boardId" name="boardId" th:value="${board.boardId}">
+    <input type="text" id="title" name="title" th:value="${board.title}" placeholder="제목을 입력하세요">
+    <br>
+    <textarea id="content" name="content" th:text="${board.content}" placeholder="내용을 입력하세요"></textarea>
+    <br>
+    <button id="btnSave" type="button">수정</button>
+    <button id="btnCancel"  type="button">취소</button>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        $('#btnSave').on('click', function () {
+
+            let boardId = $('#boardId').val();
+            let title = $('#title').val();
+            let content = $('#content').val();
+
+            let data = {
+                boardId: boardId,
+                title: title,
+                content: content
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '/boards/' + boardId,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function () {
+                    alert('수정되었습니다.');
+                },
+                error: function () {
+                    alert('실패하였습니다.');
+                }
+            });
+        });
+
+        $('#btnCancel').on('click', function () {
+            history.back(-1);
+        });
+    });
+</script>
+</body>
+</html>
