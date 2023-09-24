@@ -10,18 +10,9 @@
 <body>
 <form>
     <input type="hidden" id="boardId" name="boardId" th:value="${board.boardId}">
-    <input type="text" id="title" name="title" th:value="${board.title}" placeholder="제목을 입력하세요">
     <br>
-    <textarea id="content" name="content" rows="10" cols="100" th:text="${board.content}" placeholder="내용을 입력하세요"></textarea>
-    <script type="text/javascript">
-        var oEditors = [];
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
-            elPlaceHolder: "content",
-            sSkinURI: "/se2/SmartEditor2Skin.html",
-            fCreator: "createSEditor2"
-        });
-    </script>
+    <p th:text="${board.title}"></p>
+    <p th:utext="${board.content}"></p>
     <br>
     <button id="btnSave" type="button">수정</button>
     <button id="btnCancel" type="button">취소</button>
@@ -31,34 +22,8 @@
 <script type="text/javascript">
     $(function () {
         $('#btnSave').on('click', function () {
-
             let boardId = $('#boardId').val();
-            let title = $('#title').val();
-
-            // 에디터의 내용이 textarea에 적용된다.
-            oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-
-            let content = $('#content').val();
-
-            let data = {
-                boardId: boardId,
-                title: title,
-                content: content
-            }
-
-            $.ajax({
-                type: 'post',
-                url: '/boards/' + boardId,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
-                success: function () {
-                    alert('수정되었습니다.');
-                },
-                error: function () {
-                    alert('실패하였습니다.');
-                }
-            });
+            location.href='/boards/' + boardId + '/update';
         });
 
         $('#btnCancel').on('click', function () {

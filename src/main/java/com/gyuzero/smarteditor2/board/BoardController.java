@@ -29,6 +29,13 @@ public class BoardController {
         return "board/detail";
     }
 
+    @GetMapping("/boards/{boardId}/update")
+    public String updateBoard(@PathVariable("boardId") int boardId, Model model) {
+        Board board = boardService.findById(boardId);
+        model.addAttribute("board", board);
+        return "board/update";
+    }
+
     @ResponseBody
     @PostMapping("/boards")
     public ResponseEntity<Board> boardSave(@RequestBody BoardForm boardForm) {
@@ -39,8 +46,8 @@ public class BoardController {
     }
 
     @ResponseBody
-    @PostMapping("/boards/{id}")
-    public ResponseEntity<Board> boardUpdate(@RequestBody BoardUpdate boardUpdate) {
+    @PostMapping("/boards/{boardId}")
+    public ResponseEntity<Board> updateBoard(@PathVariable("boardId") int boardId, @RequestBody BoardUpdate boardUpdate) {
         log.info("{}", boardUpdate);
         boardService.update(boardUpdate);
         Board board = modelMapper.map(boardUpdate, Board.class);
