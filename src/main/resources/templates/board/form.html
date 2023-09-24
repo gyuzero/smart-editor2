@@ -9,7 +9,7 @@
 </head>
 <body>
     <form method="post" action="/boards">
-        <input type="text" name="title" placeholder="제목을 입력하세요">
+        <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
         <br>
         <textarea id="content" name="content" rows="10" cols="100" placeholder="내용을 입력하세요"></textarea>
         <script type="text/javascript">
@@ -22,11 +22,41 @@
             });
         </script>
         <br>
-        <button type="submit">저장</button>
+        <button id="btnSave" type="button">저장</button>
         <button id="btnCancel" type="button">취소</button>
     </form>
     <script type="text/javascript">
         $(function () {
+            $('#btnSave').on('click', function () {
+                let title = $('#title').val();
+
+                // 에디터의 내용이 textarea에 적용된다.
+                oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                let content = $('#content').val();
+
+                let data = {
+                    title: title,
+                    content: content
+                }
+
+                $.ajax({
+                    type: 'post',
+                    url: '/boards',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data),
+                    success: function () {
+                        alert('등록되었습니다.');
+                        location.href='/';
+                    },
+                    error: function () {
+                        alert('실패하였습니다.');
+                    }
+                });
+
+            });
+
             $('#btnCancel').on('click', function () {
                 history.back(-1);
             });

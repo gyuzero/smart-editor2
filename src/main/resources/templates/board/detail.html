@@ -24,7 +24,8 @@
     </script>
     <br>
     <button id="btnSave" type="button">수정</button>
-    <button id="btnCancel"  type="button">취소</button>
+    <button id="btnCancel" type="button">취소</button>
+    <button id="btnList" type="button">목록</button>
 </form>
 
 <script type="text/javascript">
@@ -33,6 +34,10 @@
 
             let boardId = $('#boardId').val();
             let title = $('#title').val();
+
+            // 에디터의 내용이 textarea에 적용된다.
+            oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+
             let content = $('#content').val();
 
             let data = {
@@ -58,6 +63,10 @@
 
         $('#btnCancel').on('click', function () {
             history.back(-1);
+        });
+
+        $('#btnList').on('click', function () {
+           location.href='/';
         });
     });
 </script>

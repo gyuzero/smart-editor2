@@ -29,11 +29,13 @@ public class BoardController {
         return "board/detail";
     }
 
+    @ResponseBody
     @PostMapping("/boards")
-    public String boardSave(BoardForm boardForm) {
+    public ResponseEntity<Board> boardSave(@RequestBody BoardForm boardForm) {
         log.info("{}", boardForm);
         boardService.save(boardForm);
-        return "redirect:/";
+        Board board = modelMapper.map(boardForm, Board.class);
+        return ResponseEntity.ok().body(board);
     }
 
     @ResponseBody
